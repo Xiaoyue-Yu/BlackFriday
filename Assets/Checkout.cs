@@ -6,7 +6,7 @@ public class SimpleCheckout : MonoBehaviour
 {
     public Transform customer;
     public Transform targetPosition;
-    public float moveSpeed = 5f;
+    public float moveSpeed = 15f;
 
     public GameObject floatingTextPrefab;
     public Transform textSpawnPoint;
@@ -31,9 +31,9 @@ public class SimpleCheckout : MonoBehaviour
 
         if (isMoving)
         {
-            customer.position = Vector3.Lerp(customer.position, targetPosition.position, Time.deltaTime * moveSpeed);
+            customer.position = Vector3.MoveTowards(customer.position, targetPosition.position, Time.deltaTime * moveSpeed);
 
-            if (Vector3.Distance(customer.position, targetPosition.position) < 0.1f)
+            if (Vector3.Distance(customer.position, targetPosition.position) < 0.001f)
             {
                 customer.position = targetPosition.position;
                 isMoving = false;

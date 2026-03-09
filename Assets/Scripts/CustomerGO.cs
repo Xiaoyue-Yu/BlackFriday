@@ -5,7 +5,7 @@ public class CustomerGO : MonoBehaviour
 {
     public Customer customerData;
 
-    [SerializeField] private bool isInteracted = false;
+    public bool isInteracted = false;
     // public bool isInteractable { get; private set; } = false;
 
     public static event Action<string> OnCustomerServeStart;
@@ -16,6 +16,12 @@ public class CustomerGO : MonoBehaviour
         PlayerCustomerInteraction.OnCustomerApproach += PlayerCustomerInteractionOnOnCustomerApproach;
         PlayerCustomerInteraction.OnCustomerAway += PlayerCustomerInteractionOnOnCustomerAway;
         PlayerCustomerInteraction.OnCustomerServeStart += PlayerCustomerInteractionOnOnCustomerServeStart;
+        CheckoutManager.Instance.OnCheckOutFinished += InstanceOnOnCheckOutFinished;
+    }
+
+    private void InstanceOnOnCheckOutFinished()
+    {
+        isInteracted = true;
     }
 
     private void PlayerCustomerInteractionOnOnCustomerServeStart(CustomerGO obj)
@@ -31,12 +37,16 @@ public class CustomerGO : MonoBehaviour
         OnCustomerServeStart?.Invoke(this.customerData.customerId);
         // TODO: start dialogue?
         
+        
+        
     }
 
     private void OnDisable()
     {
         PlayerCustomerInteraction.OnCustomerApproach -= PlayerCustomerInteractionOnOnCustomerApproach;
         PlayerCustomerInteraction.OnCustomerAway -= PlayerCustomerInteractionOnOnCustomerAway;
+        PlayerCustomerInteraction.OnCustomerServeStart -= PlayerCustomerInteractionOnOnCustomerServeStart;
+        CheckoutManager.Instance.OnCheckOutFinished -= InstanceOnOnCheckOutFinished;
     }
 
     private void PlayerCustomerInteractionOnOnCustomerAway(CustomerGO obj)

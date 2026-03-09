@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SetActive()
     {
+        Debug.Log("Movement active");
         isActive = true;
     }
     

@@ -13,7 +13,7 @@ public class ItemGO : MonoBehaviour
     [SerializeField] private Button _addToCartButton;
     [SerializeField] private TextMeshProUGUI remainingQuantityText;
 
-    public event Action<Item> OnAddToCart;
+    public static event Action<Item> OnAddToCart;
 
     private Image img;
     private void Awake()
@@ -40,11 +40,13 @@ public class ItemGO : MonoBehaviour
 
     public void AddToCart()
     {
+        // Cannot add when serving noone
+        if (RunManager.Instance.curCustomerGO == null) return;
+        
         CartManager.Instance.curCart.Add(this.itemData.ToItemValue(RunManager.Instance.curCustomerGO.customerData.customerId));
         quantity -= 1;
-        Debug.Log(CartManager.Instance.curCart.Count);
+        Debug.Log("Added, Cart count: " + CartManager.Instance.curCart.Count);
         RefreshUI();
-        // TODO
         OnAddToCart?.Invoke(this.itemData);
     }
 

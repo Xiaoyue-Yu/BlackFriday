@@ -25,6 +25,7 @@ public class PlayerCustomerInteraction : MonoBehaviour
     {
         if (RunManager.Instance.curCustomerGO == null && availableCustomer != null)
         {
+            if (availableCustomer.isInteracted) return;
             if (Input.GetKey(KeyCode.E))
             {
                 // serve customer

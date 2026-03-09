@@ -30,7 +30,7 @@ public class ShopTimer : MonoBehaviour
         }
         else
         {
-            // If a new Timer exists in the next scene, give it our clock reference then kill it
+            // If a new Timer exists in the next scene, give it reference then kill it
             Instance.AssignNewUI(this.clockText);
             Destroy(gameObject);
             return;
@@ -66,6 +66,7 @@ public class ShopTimer : MonoBehaviour
 
     private void InstanceOnOnRunStart()
     {
+        Debug.Log("Store open!!!");
         OpenStore();
     }
 

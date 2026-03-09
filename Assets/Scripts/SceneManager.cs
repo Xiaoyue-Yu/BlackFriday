@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -23,14 +24,27 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        CustomerGO.OnCustomerServeStart += CustomerGOOnOnCustomerServeStart;
-    }
-
-    private void CustomerGOOnOnCustomerServeStart(string obj)
+    public void LoadStoreScene()
     {
         if (storeSceneName == "") return;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(storeSceneName);
+        SceneManager.LoadScene(storeSceneName);
+    }
+
+    public void LoadCheckoutScene()
+    {
+        if (checkoutSceneName == "") return;
+        SceneManager.LoadScene(checkoutSceneName);
+    }
+
+    public void LoadCustomerScene()
+    {
+        if (customerSceneName == "") return;
+        SceneManager.LoadScene(customerSceneName);
+    }
+
+    public void LoadTitleScene()
+    {
+        if (titleSceneName == "") return;
+        SceneManager.LoadScene(titleSceneName);
     }
 }

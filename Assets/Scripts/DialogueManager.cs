@@ -45,7 +45,7 @@ public class DialogueManager : MonoBehaviour
             {
                 Debug.Log(i + ": " + story.currentChoices[i].text);
             }
-        }
+        } 
     }
 
     void ReadVariables()

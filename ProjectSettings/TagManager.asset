@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - ShopArea
+  - Customer
   layers:
   - Default
   - TransparentFX
@@ -40,15 +42,6 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: background
-    uniqueID: 1546877925
-    locked: 0
-  - name: casher
-    uniqueID: 551920497
-    locked: 0
-  - name: customer
-    uniqueID: 3260236281
     locked: 0
   m_RenderingLayers:
   - Default

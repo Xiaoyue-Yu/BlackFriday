@@ -6,14 +6,13 @@ public class ShopArea : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] private GameObject panel;
-    
+
     [SerializeField] private bool isTriggered = false;
     [SerializeField] private bool isPanelActivated = false;
-    
-    
 
     private Collider2D colZone;
     private SpriteRenderer sr;
+
     private void Awake()
     {
         if (colZone == null)
@@ -22,10 +21,12 @@ public class ShopArea : MonoBehaviour
         }
 
         colZone.isTrigger = true;
-
         sr = GetComponent<SpriteRenderer>();
-        
-        panel.SetActive(false);
+
+        if (panel != null)
+        {
+            panel.SetActive(false);
+        }
     }
 
     private void Start()
@@ -60,14 +61,39 @@ public class ShopArea : MonoBehaviour
     private void PlayerShopInteractionOnOnCloseShop(ShopArea shopArea)
     {
         if (shopArea != this) return;
-        if (panel) panel.SetActive(false);
+
+        if (panel)
+        {
+            ClosetSelection closet = panel.GetComponent<ClosetSelection>();
+            if (closet != null)
+            {
+                closet.CloseCloset();
+            }
+            else
+            {
+                panel.SetActive(false);
+            }
+        }
         isPanelActivated = false;
     }
 
     private void PlayerShopInteractionOnOnOpenShop(ShopArea shopArea)
     {
         if (shopArea != this) return;
-        if (panel) panel.SetActive(true);
+
+        if (panel)
+        {
+            ClosetSelection closet = panel.GetComponent<ClosetSelection>();
+            if (closet != null)
+            { 
+                panel.SetActive(true);
+                closet.OpenCloset();
+            }
+            else
+            {
+                //panel.SetActive(true);
+            }
+        }
         isPanelActivated = true;
     }
 
@@ -80,5 +106,4 @@ public class ShopArea : MonoBehaviour
     {
         sr.color = Color.white;
     }
-    
 }

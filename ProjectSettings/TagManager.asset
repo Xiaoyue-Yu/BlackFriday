@@ -43,5 +43,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: floor
+    uniqueID: 2871194047
+    locked: 0
+  - name: receipt
+    uniqueID: 673463663
+    locked: 0
+  - name: casher
+    uniqueID: 282226255
+    locked: 0
+  - name: customer
+    uniqueID: 3043385363
+    locked: 0
   m_RenderingLayers:
   - Default

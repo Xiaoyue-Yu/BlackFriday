@@ -1,0 +1,42 @@
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
+// using System
+
+// public class DialogueEvents
+// {
+//     public event Action<string> onEnterDialogue;
+    
+//     public void EnterDialogue(string knowName)
+//     {
+//         if (onEnterDialogue != null)
+//         {
+//             onEnterDialogue(knotName);
+//         }
+//     }
+
+//     public event Action onDialogueStarted;
+//     {
+//         if (onDialogueStarted != null)
+//         {
+//             onDialogueStarted();
+//         }
+//     }
+
+//     public void onDialogueFinished()
+//     {
+//         if (onDialogueFinished != null)
+//         {
+//             onDialogueFinished();
+//         }
+//     }
+//     public event Action<string> onDisplayDialogue;
+
+//     public void DisplayDialogue(string dialogueLine)
+//     {
+//         if (onDisplayDialogue != null)
+//         {
+//             onDisplayDialogue(dialogueLine);
+//         }
+//     }
+// }

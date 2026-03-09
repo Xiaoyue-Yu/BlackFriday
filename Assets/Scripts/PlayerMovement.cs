@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        isActive = false;
+        isActive = true;
         animator = GetComponent<Animator>();
     }
 

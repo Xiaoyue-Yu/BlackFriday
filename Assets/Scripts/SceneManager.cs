@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-public class SceneManager : MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
-    public static SceneManager Instance;
+    public static SceneLoader Instance;
 
     public string storeSceneName;
     public string customerSceneName;

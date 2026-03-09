@@ -6,8 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: 58a1cebf54ea94ad6a1d8365ee6537d0
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  - enabled: 1
+    path: Assets/Scenes/QuestDialogueScene.unity
+    guid: 95590aaa2897946a2b9b42737722897b
+  m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

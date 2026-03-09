@@ -8,7 +8,7 @@ public class ClosetSelection : MonoBehaviour
     public GameObject closetPanel;
 
     private int currentIndex = 0;
-    private bool isClosetOpen = false;
+    [SerializeField] private bool isClosetOpen = false;
 
     void Update()
     {
@@ -40,6 +40,7 @@ public class ClosetSelection : MonoBehaviour
 
     public void OpenCloset()
     {
+        Debug.Log("Opening closet");
         closetPanel.SetActive(true);
         isClosetOpen = true;
         currentIndex = 0;

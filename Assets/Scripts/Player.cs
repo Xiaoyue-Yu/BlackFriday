@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
 
     private void InstanceOnOnRunStart()
     {
+        gameObject.transform.position = new Vector3(0f, -4f, 0f);
         sr.enabled = true;
     }
 }

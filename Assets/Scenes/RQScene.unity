@@ -518,7 +518,7 @@ PrefabInstance:
       objectReference: {fileID: -1075185417662412103, guid: 0003236d96c630f408590b793d49e4e2, type: 3}
     - target: {fileID: 2134538259018569170, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
       propertyPath: m_Name
-      value: PanelShoes
+      value: PanelShoes_new
       objectReference: {fileID: 0}
     - target: {fileID: 2134538259018569170, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
       propertyPath: m_IsActive
@@ -4729,7 +4729,7 @@ PrefabInstance:
       objectReference: {fileID: 5356341733598316756, guid: 40f745454b3f11c4d9b65e8fb681a10a, type: 3}
     - target: {fileID: 2134538259018569170, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
       propertyPath: m_Name
-      value: PanelBags
+      value: PanelBags_new
       objectReference: {fileID: 0}
     - target: {fileID: 2134538259018569170, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
       propertyPath: m_IsActive
@@ -4994,7 +4994,7 @@ PrefabInstance:
       objectReference: {fileID: 8019980194098035605, guid: 0d6640023b0fc8f469efae6f5d04067f, type: 3}
     - target: {fileID: 2134538259018569170, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
       propertyPath: m_Name
-      value: PanelMen
+      value: PanelMen_new
       objectReference: {fileID: 0}
     - target: {fileID: 2134538259018569170, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
       propertyPath: m_IsActive
@@ -5338,7 +5338,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2134538259018569170, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
       propertyPath: m_Name
-      value: PanelWomen
+      value: PanelWomen_new
       objectReference: {fileID: 0}
     - target: {fileID: 2134538259018569170, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
       propertyPath: m_IsActive
@@ -6257,7 +6257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2134538259018569170, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
       propertyPath: m_Name
-      value: PanelNonbi
+      value: PanelNonbi_new
       objectReference: {fileID: 0}
     - target: {fileID: 2134538259018569170, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
       propertyPath: m_IsActive

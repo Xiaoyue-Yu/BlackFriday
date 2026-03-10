@@ -9,6 +9,7 @@ public class CheckoutManager : MonoBehaviour
     
     [SerializeField] private Button checkoutButton;
 
+    public event Action OnCheckOutStart;
     public event Action OnCheckOutFinished;
 
     private void Awake()
@@ -49,7 +50,7 @@ public class CheckoutManager : MonoBehaviour
         ItemGO.OnAddToCart -= ItemGOOnOnAddToCart;
     }
 
-    private void ItemGOOnOnAddToCart(Item obj)
+    private void ItemGOOnOnAddToCart(GameObject obj)
     {
         RefreshButton();
     }
@@ -65,20 +66,20 @@ public class CheckoutManager : MonoBehaviour
     public void Checkout(List<ItemValue> cart)
     {
         Debug.Log("Checking out ...");
+        OnCheckOutStart?.Invoke();
         
-        int totalScore = 0;
         float totalPrice = 0;
         foreach (var iv in cart)
         {
             var score = iv.CustomerScore;
             var price = iv.Price;
-            totalScore += score;
+            RunManager.Instance.RunScore += score;
             totalPrice += price;
         }
 
         
         // TODO: apply score logic
-        bool isBuying = ProcessCheckout(totalPrice, totalScore);
+        bool isBuying = ProcessCheckout(totalPrice, RunManager.Instance.RunScore);
         
         // add to run earnings
         if (isBuying)

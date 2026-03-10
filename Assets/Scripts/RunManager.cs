@@ -13,6 +13,13 @@ public class RunManager : MonoBehaviour
 
     [SerializeField]private float runEarnings = 0f;
     [SerializeField]private int customerFulfilled = 0;
+    [SerializeField]private int runScore = 0;
+
+    public int RunScore
+    {
+        get => runScore;
+        set => runScore = value;
+    }
 
     public int CustomerFulfilled
     {
@@ -50,6 +57,7 @@ public class RunManager : MonoBehaviour
     {
         // clear customer
         curCustomerGO = null;
+        runScore = 0;
     }
 
     private void OnDisable()

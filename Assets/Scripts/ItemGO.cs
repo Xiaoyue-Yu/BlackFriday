@@ -14,7 +14,7 @@ public class ItemGO : MonoBehaviour
     [SerializeField] private TextMeshProUGUI remainingQuantityText;
     [SerializeField] private TextMeshProUGUI priceTagText;
 
-    public static event Action<Item> OnAddToCart;
+    public static event Action<GameObject> OnAddToCart;
 
     private Image img;
     private void Awake()
@@ -50,7 +50,7 @@ public class ItemGO : MonoBehaviour
         quantity -= 1;
         Debug.Log("Added, Cart count: " + CartManager.Instance.curCart.Count);
         RefreshUI();
-        OnAddToCart?.Invoke(this.itemData);
+        OnAddToCart?.Invoke(gameObject);
     }
 
     private void RefreshUI()

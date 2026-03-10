@@ -29,6 +29,7 @@ public class PlayerCustomerInteraction : MonoBehaviour
             if (Input.GetKey(KeyCode.E))
             {
                 // serve customer
+                //event dialogue 
                 RunManager.Instance.curCustomerGO = availableCustomer;
                 availableCustomer = null;
                 OnCustomerServeStart?.Invoke(RunManager.Instance.curCustomerGO);

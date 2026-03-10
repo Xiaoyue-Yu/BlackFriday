@@ -2322,8 +2322,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -940, y: 26}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -951.7319, y: 14.2681}
+  m_SizeDelta: {x: 475.7009, y: 190.7834}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &848080346
 MonoBehaviour:
@@ -2860,7 +2860,7 @@ GameObject:
   - component: {fileID: 1169558498}
   - component: {fileID: 1169558497}
   m_Layer: 0
-  m_Name: Option1
+  m_Name: ButtonOption1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2929,7 +2929,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1169558498}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1322311953}
+        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
+        m_MethodName: MakeChoice
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1169558498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4872,7 +4884,7 @@ GameObject:
   - component: {fileID: 2023150695}
   - component: {fileID: 2023150694}
   m_Layer: 0
-  m_Name: Option3
+  m_Name: ButtonOption3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4941,7 +4953,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2023150695}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1322311953}
+        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
+        m_MethodName: MakeChoice
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2023150695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4993,7 +5017,7 @@ GameObject:
   - component: {fileID: 2076369662}
   - component: {fileID: 2076369661}
   m_Layer: 0
-  m_Name: Option2
+  m_Name: ButtonOption2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5062,7 +5086,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2076369662}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1322311953}
+        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
+        m_MethodName: MakeChoice
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2076369662
 MonoBehaviour:
   m_ObjectHideFlags: 0

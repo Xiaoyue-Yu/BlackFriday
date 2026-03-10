@@ -138,4 +138,5 @@ public class DialogueManager : MonoBehaviour
 
         currentStory = null;
     }
+    
 }

@@ -9,6 +9,9 @@ public class CartManager : MonoBehaviour
     
     public List<ItemValue> curCart = new List<ItemValue>();
     public Dictionary<string, List<ItemValue>> cartsThisRun = new Dictionary<string, List<ItemValue>>();
+    [SerializeField] private string curCustomerId;
+
+    public event Action OnCartCleared;
 
     private void Awake()
     {
@@ -28,33 +31,42 @@ public class CartManager : MonoBehaviour
     {
         RunManager.Instance.OnRunStart += InstanceOnOnRunStart;
         CustomerGO.OnCustomerServeStart += CustomerGOOnOnCustomerServeStart;
+        CheckoutManager.Instance.OnCheckOutFinished += InstanceOnOnCheckOutFinished;
+    }
+
+    private void InstanceOnOnCheckOutFinished()
+    {
+        cartsThisRun.Add(curCustomerId, new List<ItemValue>(curCart));
+        Debug.Log("Save to run: " + cartsThisRun[curCustomerId].Count);
+        curCustomerId = "";
+        ClearCart();
+        
+
     }
 
     private void OnDisable()
     {
         RunManager.Instance.OnRunStart -= InstanceOnOnRunStart;
         CustomerGO.OnCustomerServeStart -= CustomerGOOnOnCustomerServeStart;
+        CheckoutManager.Instance.OnCheckOutFinished -= InstanceOnOnCheckOutFinished;
     }
 
     private void InstanceOnOnRunStart()
     {
-        cartsThisRun.Clear();
-        curCart.Clear();
+        cartsThisRun = new Dictionary<string, List<ItemValue>>();
+        ClearCart();
     }
 
     private void CustomerGOOnOnCustomerServeStart(string customerId)
     {
-        // Check if we already have a cart for this customer
-        if (cartsThisRun.ContainsKey(customerId))
-        {
-            // Load the existing cart into curCart
-            curCart = cartsThisRun[customerId];
-        }
-        else
-        {
-            List<ItemValue> newCart = new List<ItemValue>();
-            cartsThisRun.Add(customerId, newCart);
-            curCart = newCart;
-        }
+        curCustomerId = customerId;
+        ClearCart();
+    }
+
+    private void ClearCart()
+    {
+        curCart.Clear();
+        OnCartCleared?.Invoke();
+        Debug.Log("Cleared cart");
     }
 }

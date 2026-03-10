@@ -697,7 +697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ecb2d2e71d9a4a9d9e7ae77580c8b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: QuestDialogueScene
+  sceneName: RQScene
 --- !u!1 &1465035396
 GameObject:
   m_ObjectHideFlags: 0

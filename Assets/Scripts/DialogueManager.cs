@@ -1,65 +1,141 @@
-using Ink.Runtime;
+
 using UnityEngine;
+using Ink.Runtime;
+using TMPro;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    [Header("Ink JSON file")]
-    public TextAsset inkJSON;
+    [Header("UI")]
+    [SerializeField] private GameObject dialoguePanel;
+    [SerializeField] private TextMeshProUGUI customerInitialText;
 
-    private Story story;
+    [SerializeField] private Button option1Button;
+    [SerializeField] private Button option2Button;
+    [SerializeField] private Button option3Button;
 
-    void Start()
+    [SerializeField] private TextMeshProUGUI option1Text;
+    [SerializeField] private TextMeshProUGUI option2Text;
+    [SerializeField] private TextMeshProUGUI option3Text;
+
+    [Header("Ink")]
+    [SerializeField] private TextAsset inkJSON;
+
+    private Story currentStory;
+    private bool dialoguePlaying = false;
+
+    private void Start()
     {
-        Debug.Log("QuestDialogueScene started");
-
-        // Load the Ink story
-        story = new Story(inkJSON.text);
-
-        // Start with a specific customer (you can randomize later)
-        story.ChoosePathString("customer1");
-
-        Debug.Log("Starting dialogue...\n");
-
-        ContinueStory();
+        if (dialoguePanel != null)
+        {
+            dialoguePanel.SetActive(false);
+        }
     }
 
-    void ContinueStory()
+    private void OnEnable()
     {
-        while (story.canContinue)
-        {
-            string line = story.Continue();
-            Debug.Log("Customer says: " + line);
-        }
-
-        PrintChoices();
-        ReadVariables();
+        CustomerGO.OnCustomerServeStart += OnEnterDialogue;
     }
 
-    void PrintChoices()
+    private void OnDisable()
     {
-        if (story.currentChoices.Count > 0)
-        {
-            Debug.Log("Player Choices:");
-
-            for (int i = 0; i < story.currentChoices.Count; i++)
-            {
-                Debug.Log(i + ": " + story.currentChoices[i].text);
-            }
-        } 
+        CustomerGO.OnCustomerServeStart -= OnEnterDialogue;
     }
 
-    void ReadVariables()
+    private void OnEnterDialogue(string customerId)
     {
-        if (story.variablesState.GlobalVariableExistsWithName("trust"))
+        dialoguePlaying = true;
+
+        if (dialoguePanel != null)
         {
-            int trust = (int)story.variablesState["trust"];
-            Debug.Log("Trust score: " + trust);
+            dialoguePanel.SetActive(true);
         }
 
-        if (story.variablesState.GlobalVariableExistsWithName("outfitHint"))
+        Debug.Log("Start dialogue for: " + customerId);
+
+        if (inkJSON == null)
         {
-            string hint = (string)story.variablesState["outfitHint"];
-            Debug.Log("Outfit hint: " + hint);
+            Debug.LogError("Ink JSON is not assigned");
+            return;
         }
+
+        currentStory = new Story(inkJSON.text);
+        // currentStory.ChoosePathString(customerId);
+        try
+        {
+            currentStory.ChoosePathString(customerId);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Ink path not found: " + customerId + "\n" + e.Message);
+            return;
+        }
+
+        RefreshView();
+    }
+
+    private void RefreshView()
+    {
+        if (currentStory == null) return;
+
+        if (currentStory.canContinue)
+        {
+            string line = currentStory.Continue().Trim();
+            customerInitialText.text = line;
+        }
+
+        DisplayChoices();
+
+        if (!currentStory.canContinue && currentStory.currentChoices.Count == 0)
+        {
+            EndDialogue();
+        }
+    }
+
+    private void DisplayChoices()
+    {
+        option1Button.gameObject.SetActive(false);
+        option2Button.gameObject.SetActive(false);
+        option3Button.gameObject.SetActive(false);
+
+        if (currentStory.currentChoices.Count > 0)
+        {
+            option1Button.gameObject.SetActive(true);
+            option1Text.text = currentStory.currentChoices[0].text;
+        }
+
+        if (currentStory.currentChoices.Count > 1)
+        {
+            option2Button.gameObject.SetActive(true);
+            option2Text.text = currentStory.currentChoices[1].text;
+        }
+
+        if (currentStory.currentChoices.Count > 2)
+        {
+            option3Button.gameObject.SetActive(true);
+            option3Text.text = currentStory.currentChoices[2].text;
+        }
+    }
+
+    public void MakeChoice(int choiceIndex)
+    {
+        if (currentStory == null) return;
+        if (choiceIndex >= currentStory.currentChoices.Count) return;
+
+        currentStory.ChooseChoiceIndex(choiceIndex);
+        RefreshView();
+    }
+
+    public void EndDialogue()
+    {
+        Debug.Log("Ending dialogue");
+        dialoguePlaying = false;
+
+        if (dialoguePanel != null)
+        {
+            dialoguePanel.SetActive(false);
+        }
+
+        currentStory = null;
     }
 }

@@ -16,7 +16,11 @@ public class CustomerGO : MonoBehaviour
         PlayerCustomerInteraction.OnCustomerApproach += PlayerCustomerInteractionOnOnCustomerApproach;
         PlayerCustomerInteraction.OnCustomerAway += PlayerCustomerInteractionOnOnCustomerAway;
         PlayerCustomerInteraction.OnCustomerServeStart += PlayerCustomerInteractionOnOnCustomerServeStart;
-        CheckoutManager.Instance.OnCheckOutFinished += InstanceOnOnCheckOutFinished;
+        // CheckoutManager.Instance.OnCheckOutFinished += InstanceOnOnCheckOutFinished;
+        if (CheckoutManager.Instance != null)
+        {
+            CheckoutManager.Instance.OnCheckOutFinished += InstanceOnOnCheckOutFinished;
+        }
     }
 
     private void InstanceOnOnCheckOutFinished()
@@ -34,6 +38,7 @@ public class CustomerGO : MonoBehaviour
 
     private void ServeCustomer()
     {
+        Debug.Log("Customer interaction triggered: " + customerData.customerId);
         OnCustomerServeStart?.Invoke(this.customerData.customerId);
         // TODO: start dialogue?
         
@@ -46,7 +51,11 @@ public class CustomerGO : MonoBehaviour
         PlayerCustomerInteraction.OnCustomerApproach -= PlayerCustomerInteractionOnOnCustomerApproach;
         PlayerCustomerInteraction.OnCustomerAway -= PlayerCustomerInteractionOnOnCustomerAway;
         PlayerCustomerInteraction.OnCustomerServeStart -= PlayerCustomerInteractionOnOnCustomerServeStart;
-        CheckoutManager.Instance.OnCheckOutFinished -= InstanceOnOnCheckOutFinished;
+        // CheckoutManager.Instance.OnCheckOutFinished -= InstanceOnOnCheckOutFinished;
+        if (CheckoutManager.Instance != null)
+        {
+            CheckoutManager.Instance.OnCheckOutFinished -= InstanceOnOnCheckOutFinished;
+        }
     }
 
     private void PlayerCustomerInteractionOnOnCustomerAway(CustomerGO obj)

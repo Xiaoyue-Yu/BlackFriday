@@ -2920,7 +2920,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 786847954}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 537358363008160878}
+        m_TargetAssemblyTypeName: CustomerWander, Assembly-CSharp
+        m_MethodName: GoToCheckout
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &786847954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8479,6 +8491,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8af1c8d4b94882469dd4a7e6ac1499e, type: 3}
+--- !u!114 &537358363008160878 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2133916123253707340, guid: d8af1c8d4b94882469dd4a7e6ac1499e, type: 3}
+  m_PrefabInstance: {fileID: 537358363008160877}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df668a2dbaf531d4dbe90b724728b3d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CustomerWander
 --- !u!1001 &1576143936284531102
 PrefabInstance:
   m_ObjectHideFlags: 0

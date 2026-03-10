@@ -12,6 +12,7 @@ public class ItemGO : MonoBehaviour
 
     [SerializeField] private Button _addToCartButton;
     [SerializeField] private TextMeshProUGUI remainingQuantityText;
+    [SerializeField] private TextMeshProUGUI priceTagText;
 
     public static event Action<Item> OnAddToCart;
 
@@ -24,6 +25,8 @@ public class ItemGO : MonoBehaviour
             return;
         }
         quantity = itemData.quantityInStock;
+        priceTagText.text = itemData.price.ToString();
+        
         if (_addToCartButton == null)
         {
             _addToCartButton = GetComponentInChildren<Button>();

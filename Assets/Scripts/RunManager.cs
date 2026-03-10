@@ -57,6 +57,7 @@ public class RunManager : MonoBehaviour
     {
         // clear customer
         curCustomerGO = null;
+        runScore = 0;
     }
 
     private void OnDisable()

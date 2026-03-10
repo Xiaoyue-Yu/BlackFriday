@@ -64,6 +64,14 @@ public class ClosetSelection : MonoBehaviour
     private void ConfirmSelection()
     {
         Debug.Log("Player confirmed item index: " + currentIndex);
-        CloseCloset();
+        // add to cart
+        var itemObj = clothesSlots[currentIndex].GetComponent<ItemGO>();
+        if (itemObj == null)
+        {
+            Debug.LogWarning("Error getting Item GameObj");
+        }
+        itemObj.AddToCart();
+        
+        // CloseCloset();
     }
 }

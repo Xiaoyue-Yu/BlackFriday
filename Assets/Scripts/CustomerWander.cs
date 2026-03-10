@@ -13,7 +13,7 @@ public class CustomerWander : MonoBehaviour
     [Header("State")]
     public CustomerState currentState = CustomerState.Wandering;
 
-    private Vector2 counterPosition = new Vector2(0f, 4f);
+    private Vector2 counterPosition = new Vector2(0f, 2f);
     private Vector2 exitPosition = new Vector2(0f, -6f);
 
     [Header("Wondering")]

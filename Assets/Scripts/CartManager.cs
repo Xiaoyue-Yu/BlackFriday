@@ -34,15 +34,14 @@ public class CartManager : MonoBehaviour
         CheckoutManager.Instance.OnCheckOutFinished += InstanceOnOnCheckOutFinished;
     }
 
-    private void InstanceOnOnCheckOutFinished()
+    private void InstanceOnOnCheckOutFinished(bool isBuying)
     {
         cartsThisRun.Add(curCustomerId, new List<ItemValue>(curCart));
         Debug.Log("Save to run: " + cartsThisRun[curCustomerId].Count);
         curCustomerId = "";
         ClearCart();
-        
-
     }
+    
 
     private void OnDisable()
     {

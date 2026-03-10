@@ -152,6 +152,7 @@ MonoBehaviour:
   customerSceneName: RQCustomerScene
   titleSceneName: RQTitleScene
   checkoutSceneName: 
+  resultSceneName: RQResultScene
 --- !u!4 &405052006
 Transform:
   m_ObjectHideFlags: 0
@@ -199,6 +200,9 @@ MonoBehaviour:
   curCustomerGO: {fileID: 0}
   runEarnings: 0
   customerFulfilled: 0
+  customerFailed: 0
+  runScore: 0
+  clothSold: 0
 --- !u!4 &618234036
 Transform:
   m_ObjectHideFlags: 0
@@ -243,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 509fd21d20d074cb3b4bd617a87d52f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CartManager
+  curCustomerId: 
 --- !u!4 &629106465
 Transform:
   m_ObjectHideFlags: 0
@@ -946,6 +951,10 @@ PrefabInstance:
     - target: {fileID: 1248566897112084294, guid: 3b27a50d2d7b84dbfb44b98394d45f2b, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868231037262761754, guid: 3b27a50d2d7b84dbfb44b98394d45f2b, type: 3}
+      propertyPath: moveSpeed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2679610659249779296, guid: 3b27a50d2d7b84dbfb44b98394d45f2b, type: 3}
       propertyPath: m_LocalPosition.x

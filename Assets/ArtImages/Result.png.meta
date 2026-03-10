@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-guid: c1f2614689eca47faa919a40156e1ec0
+guid: 0ce0ab748870c4c5f983e5ea198a6d6a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7183516280075165895
-    second: Buy_failed_0
-  - first:
-      213: 2493480221550442814
-    second: Buy_failed_1
-  - first:
-      213: -3676046771181481084
-    second: Buy_failed_2
-  - first:
-      213: -4142913070008535333
-    second: Buy_failed_3
-  - first:
-      213: 832055360329515351
-    second: Buy_failed_4
+      213: 8864788820530945603
+    second: Result_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -58,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -112,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Buy_failed_0
+      name: Result_0
       rect:
         serializedVersion: 2
-        x: 673
-        y: 1049
-        width: 228
-        height: 378
+        x: 120
+        y: 199
+        width: 1009
+        height: 1271
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,96 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 93f52efc0060f4c90800000000000000
-      internalID: -7183516280075165895
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Buy_failed_1
-      rect:
-        serializedVersion: 2
-        x: 898
-        y: 1186
-        width: 291
-        height: 264
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e39f9fbec0f9a9220800000000000000
-      internalID: 2493480221550442814
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Buy_failed_2
-      rect:
-        serializedVersion: 2
-        x: 1262
-        y: 1100
-        width: 151
-        height: 361
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 483910a20fe0cfcc0800000000000000
-      internalID: -3676046771181481084
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Buy_failed_3
-      rect:
-        serializedVersion: 2
-        x: 826
-        y: 908
-        width: 345
-        height: 260
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bd671de438a6186c0800000000000000
-      internalID: -4142913070008535333
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Buy_failed_4
-      rect:
-        serializedVersion: 2
-        x: 1187
-        y: 896
-        width: 139
-        height: 151
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 75186e911fd0c8b00800000000000000
-      internalID: 832055360329515351
+      spriteID: 34ed990f67e060b70800000000000000
+      internalID: 8864788820530945603
       vertices: []
       indices: 
       edges: []
@@ -225,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -235,11 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Buy_failed_0: -7183516280075165895
-      Buy_failed_1: 2493480221550442814
-      Buy_failed_2: -3676046771181481084
-      Buy_failed_3: -4142913070008535333
-      Buy_failed_4: 832055360329515351
+      Result_0: 8864788820530945603
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

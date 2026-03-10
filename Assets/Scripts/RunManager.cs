@@ -13,7 +13,22 @@ public class RunManager : MonoBehaviour
 
     [SerializeField]private float runEarnings = 0f;
     [SerializeField]private int customerFulfilled = 0;
+    [SerializeField] private int customerFailed = 0;
     [SerializeField]private int runScore = 0;
+    [SerializeField] private int clothSold = 0;
+
+    public int ClothSold
+    {
+        get => clothSold;
+        set => clothSold = value;
+    }
+
+    public int CustomerFailed
+    {
+        get => customerFailed;
+        set => customerFailed = value;
+    }
+
 
     public int RunScore
     {
@@ -53,7 +68,7 @@ public class RunManager : MonoBehaviour
         CheckoutManager.Instance.OnCheckOutFinished += InstanceOnOnCheckOutFinished;
     }
 
-    private void InstanceOnOnCheckOutFinished()
+    private void InstanceOnOnCheckOutFinished(bool isBuying)
     {
         // clear customer
         curCustomerGO = null;
@@ -71,8 +86,12 @@ public class RunManager : MonoBehaviour
         
         SceneLoader.Instance.LoadStoreScene();
         Debug.Log("Start new Run");
+        // Reset all stats for the new run
         runEarnings = 0f;
         customerFulfilled = 0;
+        customerFailed = 0;
+        clothSold = 0;
+        runScore = 0;
         OnRunStart?.Invoke();
     }
 
@@ -82,7 +101,7 @@ public class RunManager : MonoBehaviour
         OnRunEnd?.Invoke(runEarnings);
         // TODO: save score
         // transition to title
-        SceneLoader.Instance.LoadTitleScene();
+        SceneLoader.Instance.LoadResultScene();
     }
     
 }

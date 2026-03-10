@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 
@@ -15,6 +16,7 @@ public class CustomerGO : MonoBehaviour
     private GameObject popupInstance;
     [SerializeField] private Vector3 popupOffset = new Vector3(0, 1f, 0);
     [SerializeField] private Vector3 popupScale = Vector3.one;
+    [SerializeField] private Vector3 poofPopupScale = new Vector3(0.2f, 0.2f);
     [SerializeField] private Vector3 interactionPopupScale = new Vector3(0.2f, 0.2f);
     [SerializeField] private float floatDistance = 0.5f;
     [SerializeField] private float floatDuration = 1f;
@@ -37,8 +39,7 @@ public class CustomerGO : MonoBehaviour
         
         popupSR = popupInstance.GetComponent<SpriteRenderer>();
         popupSR.sprite = null;
-
-        //origLocalY = transform.localPosition.y;
+        
     }
 
 
@@ -64,9 +65,17 @@ public class CustomerGO : MonoBehaviour
         }
     }
 
-    private void InstanceOnOnCheckOutFinished()
+    private void InstanceOnOnCheckOutFinished(bool isBuying)
     {
         isInteracted = true;
+        StartCoroutine(PostCheckout(isBuying));
+    }
+
+    private IEnumerator PostCheckout(bool isBuying)
+    {
+        yield return new WaitForSeconds(6f);
+        popupInstance.transform.localScale = poofPopupScale;
+        PlayPoof(isBuying ? buySuccess : buyFail);
     }
 
     private void PlayerCustomerInteractionOnOnCustomerServeStart(CustomerGO obj)

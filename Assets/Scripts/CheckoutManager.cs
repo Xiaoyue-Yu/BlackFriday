@@ -10,7 +10,7 @@ public class CheckoutManager : MonoBehaviour
     [SerializeField] private Button checkoutButton;
 
     public event Action OnCheckOutStart;
-    public event Action OnCheckOutFinished;
+    public event Action<bool> OnCheckOutFinished;
 
     private void Awake()
     {
@@ -59,24 +59,31 @@ public class CheckoutManager : MonoBehaviour
     {
         checkoutButton = button;
         checkoutButton.onClick.RemoveAllListeners();
-        checkoutButton.onClick.AddListener(() => Checkout(CartManager.Instance.curCart));
+        checkoutButton.onClick.AddListener(() =>
+        {
+            // go to checkout
+            RunManager.Instance.curCustomerGO.GetComponent<CustomerWander>().GoToCheckout();
+            Checkout(CartManager.Instance.curCart);
+        });
 
         RefreshButton();
     }
     public void Checkout(List<ItemValue> cart)
     {
         Debug.Log("Checking out ...");
+        
         OnCheckOutStart?.Invoke();
         
         float totalPrice = 0;
+        int count = 0;
         foreach (var iv in cart)
         {
             var score = iv.CustomerScore;
             var price = iv.Price;
             RunManager.Instance.RunScore += score;
             totalPrice += price;
+            count++;
         }
-
         
         // TODO: apply score logic
         bool isBuying = ProcessCheckout(totalPrice, RunManager.Instance.RunScore);
@@ -86,6 +93,11 @@ public class CheckoutManager : MonoBehaviour
         {
             RunManager.Instance.RunEarnings += totalPrice;
             RunManager.Instance.CustomerFulfilled += 1;
+            RunManager.Instance.ClothSold += count;
+        }
+        else
+        {
+            RunManager.Instance.CustomerFailed += 1;
         }
         
         Debug.Log($"Customer {RunManager.Instance.curCustomerGO.customerData.customerName} bought: " + isBuying);
@@ -93,7 +105,7 @@ public class CheckoutManager : MonoBehaviour
         // disable after checkout
         checkoutButton.enabled = false;
         
-        OnCheckOutFinished?.Invoke();
+        OnCheckOutFinished?.Invoke(isBuying);
     }
 
     private bool ProcessCheckout(float totalPrice, float totalScore)

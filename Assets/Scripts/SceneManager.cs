@@ -10,6 +10,7 @@ public class SceneLoader : MonoBehaviour
     public string customerSceneName;
     public string titleSceneName;
     public string checkoutSceneName;
+    public string resultSceneName;
     
     private void Awake()
     {
@@ -46,5 +47,11 @@ public class SceneLoader : MonoBehaviour
     {
         if (titleSceneName == "") return;
         SceneManager.LoadScene(titleSceneName);
+    }
+
+    public void LoadResultScene()
+    {
+        if (resultSceneName == "") return;
+        SceneManager.LoadScene(resultSceneName);
     }
 }

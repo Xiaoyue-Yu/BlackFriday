@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 4936fe0807206da49b5725908e6e45f0
+guid: 25b45b8a2f60831428602b9ee67d9ce3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -349446996782345762
-    second: wo_red_heels_0
-  - first:
-      213: 6244271687724136219
-    second: wo_red_heels_1
+      213: 9066625991026012967
+    second: non_3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wo_red_heels_0
+      name: non_3_0
       rect:
         serializedVersion: 2
-        x: 29
-        y: 324
-        width: 435
-        height: 397
+        x: 331
+        y: 645
+        width: 864
+        height: 1008
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,30 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ed116f0dec3862bf0800000000000000
-      internalID: -349446996782345762
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wo_red_heels_1
-      rect:
-        serializedVersion: 2
-        x: 449
-        y: 305
-        width: 165
-        height: 416
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b1773d3340c18a650800000000000000
-      internalID: 6244271687724136219
+      spriteID: 723fd624d4023dd70800000000000000
+      internalID: 9066625991026012967
       vertices: []
       indices: 
       edges: []
@@ -160,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      wo_red_heels_0: -349446996782345762
-      wo_red_heels_1: 6244271687724136219
+      non_3_0: 9066625991026012967
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

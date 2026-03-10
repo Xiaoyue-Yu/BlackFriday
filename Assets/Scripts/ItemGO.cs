@@ -12,11 +12,10 @@ public class ItemGO : MonoBehaviour
 
     [SerializeField] private Button _addToCartButton;
     [SerializeField] private TextMeshProUGUI remainingQuantityText;
-    [SerializeField] private TextMeshProUGUI priceTagText;
-    private Image img;
 
     public static event Action<Item> OnAddToCart;
 
+    private Image img;
     private void Awake()
     {
         if (itemData == null)
@@ -25,7 +24,6 @@ public class ItemGO : MonoBehaviour
             return;
         }
         quantity = itemData.quantityInStock;
-        priceTagText.text = itemData.price.ToString();
         if (_addToCartButton == null)
         {
             _addToCartButton = GetComponentInChildren<Button>();
@@ -43,11 +41,7 @@ public class ItemGO : MonoBehaviour
     public void AddToCart()
     {
         // Cannot add when serving noone
-        if (RunManager.Instance.curCustomerGO == null)
-        {
-            Debug.Log("Cant add when not serving");
-            return;
-        }
+        if (RunManager.Instance.curCustomerGO == null) return;
         
         CartManager.Instance.curCart.Add(this.itemData.ToItemValue(RunManager.Instance.curCustomerGO.customerData.customerId));
         quantity -= 1;

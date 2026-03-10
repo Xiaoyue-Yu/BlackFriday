@@ -61,8 +61,5 @@ TagManager:
   - name: sales
     uniqueID: 2264911287
     locked: 0
-  - name: player
-    uniqueID: 3550566321
-    locked: 0
   m_RenderingLayers:
   - Default

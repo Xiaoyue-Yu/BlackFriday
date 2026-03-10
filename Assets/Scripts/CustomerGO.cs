@@ -51,6 +51,10 @@ public class CustomerGO : MonoBehaviour
         CheckoutManager.Instance.OnCheckOutFinished += InstanceOnOnCheckOutFinished;
         
     }
+    private void InstanceOnOnCheckOutFinished()
+    {
+        isInteracted = true;
+    }
     
     private void LateUpdate()
     {
@@ -93,7 +97,6 @@ public class CustomerGO : MonoBehaviour
         // TODO: start dialogue?
         
         
-        
     }
 
     private void OnDisable()
@@ -114,7 +117,7 @@ public class CustomerGO : MonoBehaviour
 
     private void PlayerCustomerInteractionOnOnCustomerApproach(CustomerGO obj)
     {
-        if (obj != this) return;
+        // if (obj != this) return;
         if (isInteracted) return;
         // TODO: show "E" to interact
         Highlight();

@@ -31,6 +31,13 @@ public class DialogueManager : MonoBehaviour
             dialoguePanel.SetActive(false);
         }
     }
+    private void Update()//test press p and dialogue panel shoukd appear // 
+    { 
+        if (Input.GetKeyDown(KeyCode.P))
+         {
+             dialoguePanel.SetActive(true); 
+        }
+    }
 
     private void OnEnable()
     {
@@ -46,12 +53,18 @@ public class DialogueManager : MonoBehaviour
     {
         dialoguePlaying = true;
 
+        Debug.Log("OnEnterDialogue fired with: " + customerId);
+
         if (dialoguePanel != null)
         {
             dialoguePanel.SetActive(true);
+            Debug.Log("Dialogue panel opened");
         }
-
-        Debug.Log("Start dialogue for: " + customerId);
+        else
+        {
+            Debug.LogError("dialoguePanel is null");
+            return;
+        }
 
         if (inkJSON == null)
         {
@@ -60,19 +73,20 @@ public class DialogueManager : MonoBehaviour
         }
 
         currentStory = new Story(inkJSON.text);
-        // currentStory.ChoosePathString(customerId);
+
         try
         {
             currentStory.ChoosePathString(customerId);
+            Debug.Log("Successfully chose Ink path: " + customerId);
         }
         catch (System.Exception e)
         {
             Debug.LogError("Ink path not found: " + customerId + "\n" + e.Message);
             return;
-        }
-
-        RefreshView();
     }
+
+    RefreshView();
+}
 
     private void RefreshView()
     {
@@ -131,10 +145,10 @@ public class DialogueManager : MonoBehaviour
         Debug.Log("Ending dialogue");
         dialoguePlaying = false;
 
-        if (dialoguePanel != null)
-        {
+        // if (dialoguePanel != null)
+        // {
             dialoguePanel.SetActive(false);
-        }
+        // }
 
         currentStory = null;
     }

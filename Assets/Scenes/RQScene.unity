@@ -572,7 +572,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 88165206}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 147249003}
+        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
+        m_MethodName: MakeChoice
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &111579500
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,7 +776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &168218913
 Transform:
   m_ObjectHideFlags: 0
@@ -4319,7 +4331,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 943422221}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 147249003}
+        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
+        m_MethodName: MakeChoice
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &960205305 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2731236235998765655, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
@@ -7850,7 +7874,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1620252543}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 147249003}
+        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
+        m_MethodName: MakeChoice
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1647471431
 GameObject:
   m_ObjectHideFlags: 0
@@ -9736,6 +9772,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3441062687092875080, guid: d8af1c8d4b94882469dd4a7e6ac1499e, type: 3}
+      propertyPath: customerData.customerId
+      value: customer1
+      objectReference: {fileID: 0}
     - target: {fileID: 3441062687092875080, guid: d8af1c8d4b94882469dd4a7e6ac1499e, type: 3}
       propertyPath: interactionPopupScale.x
       value: 0.2

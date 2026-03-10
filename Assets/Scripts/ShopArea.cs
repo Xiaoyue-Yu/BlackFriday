@@ -35,6 +35,23 @@ public class ShopArea : MonoBehaviour
         PlayerShopInteraction.OnCloseShop += PlayerShopInteractionOnOnCloseShop;
         PlayerShopInteraction.OnEnterShop += PlayerShopInteractionOnOnEnterShop;
         PlayerShopInteraction.OnLeaveShop += PlayerShopInteractionOnOnLeaveShop;
+        CheckoutManager.Instance.OnCheckOutStart += () =>
+        {
+            if (panel)
+            {
+                ClosetSelection closet = panel.GetComponent<ClosetSelection>();
+                if (closet != null)
+                {
+                    closet.CloseCloset();
+                }
+                else
+                {
+                    panel.SetActive(false);
+                }
+            }
+
+            isPanelActivated = false;
+        };
     }
 
     private void OnDisable()

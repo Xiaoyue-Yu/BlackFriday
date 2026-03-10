@@ -2920,19 +2920,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 786847954}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 537358363008160878}
-        m_TargetAssemblyTypeName: CustomerWander, Assembly-CSharp
-        m_MethodName: GoToCheckout
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &786847954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5356,7 +5344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2134538259018569170, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7013928699923533258, guid: a7b0413ef43c2a749bf46392f4490d6e, type: 3}
       propertyPath: m_Pivot.x
@@ -6040,7 +6028,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Checkout
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8442,6 +8430,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3441062687092875080, guid: d8af1c8d4b94882469dd4a7e6ac1499e, type: 3}
+      propertyPath: interactionPopupScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3441062687092875080, guid: d8af1c8d4b94882469dd4a7e6ac1499e, type: 3}
+      propertyPath: interactionPopupScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3760028964397024926, guid: d8af1c8d4b94882469dd4a7e6ac1499e, type: 3}
       propertyPath: m_Name
       value: Customer
@@ -8491,17 +8487,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8af1c8d4b94882469dd4a7e6ac1499e, type: 3}
---- !u!114 &537358363008160878 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2133916123253707340, guid: d8af1c8d4b94882469dd4a7e6ac1499e, type: 3}
-  m_PrefabInstance: {fileID: 537358363008160877}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df668a2dbaf531d4dbe90b724728b3d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CustomerWander
 --- !u!1001 &1576143936284531102
 PrefabInstance:
   m_ObjectHideFlags: 0

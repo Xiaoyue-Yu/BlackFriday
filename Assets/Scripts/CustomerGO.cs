@@ -1,10 +1,16 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
 public class CustomerGO : MonoBehaviour
 {
+    private static readonly List<CustomerGO> AllCustomers = new List<CustomerGO>();
+    private static CustomerGO activeCustomer;
+    private static int nextCustomerIndex;
+    private static bool initialSpawnScheduled;
+
     public Customer customerData;
 
     public bool isInteracted = false;
@@ -20,28 +26,40 @@ public class CustomerGO : MonoBehaviour
     [SerializeField] private Vector3 interactionPopupScale = new Vector3(0.2f, 0.2f);
     [SerializeField] private float floatDistance = 0.5f;
     [SerializeField] private float floatDuration = 1f;
-    //[SerializeField] private float origLocalY;
-    private float _currentFloatY;
+    [SerializeField] private float nextCustomerDelay = 0.5f;
+
+    private float currentFloatY;
     private SpriteRenderer popupSR;
     private Tween floatTween;
+    private SpriteRenderer customerSpriteRenderer;
+    private Collider2D customerCollider;
+    private Animator customerAnimator;
+    private CustomerWander customerWander;
 
     public static event Action<string> OnCustomerServeStart;
 
     private void Awake()
     {
+        if (!AllCustomers.Contains(this))
+        {
+            AllCustomers.Add(this);
+        }
+
+        customerSpriteRenderer = GetComponent<SpriteRenderer>();
+        customerCollider = GetComponent<Collider2D>();
+        customerAnimator = GetComponent<Animator>();
+        customerWander = GetComponent<CustomerWander>();
+
         if (popupPrefab == null)
         {
             Debug.LogWarning("No popup");
             return;
         }
-        
+
         popupInstance = Instantiate(popupPrefab, transform.position + popupOffset, Quaternion.identity);
-        
         popupSR = popupInstance.GetComponent<SpriteRenderer>();
         popupSR.sprite = null;
-        
     }
-
 
     private void Start()
     {
@@ -49,22 +67,30 @@ public class CustomerGO : MonoBehaviour
         PlayerCustomerInteraction.OnCustomerAway += PlayerCustomerInteractionOnOnCustomerAway;
         PlayerCustomerInteraction.OnCustomerServeStart += PlayerCustomerInteractionOnOnCustomerServeStart;
         CheckoutManager.Instance.OnCheckOutFinished += InstanceOnOnCheckOutFinished;
-        
+
+        ResetPresentation();
+        SetCustomerVisible(false);
+
+        if (!initialSpawnScheduled)
+        {
+            SortCustomersById();
+            initialSpawnScheduled = true;
+            StartCoroutine(SpawnInitialCustomerNextFrame());
+        }
     }
-    private void InstanceOnOnCheckOutFinished()
+
+    private IEnumerator SpawnInitialCustomerNextFrame()
     {
-        isInteracted = true;
+        yield return null;
+        SpawnNextCustomerInSequence();
     }
-    
+
     private void LateUpdate()
     {
         if (popupInstance != null)
         {
-            // Position = Customer + Base Offset + Current Bobbing Amount
-            Vector3 finalOffset = popupOffset + new Vector3(0, _currentFloatY, 0);
+            Vector3 finalOffset = popupOffset + new Vector3(0, currentFloatY, 0);
             popupInstance.transform.position = transform.position + finalOffset;
-        
-            // Ensure rotation stays zeroed
             popupInstance.transform.rotation = Quaternion.identity;
         }
     }
@@ -78,25 +104,23 @@ public class CustomerGO : MonoBehaviour
     private IEnumerator PostCheckout(bool isBuying)
     {
         yield return new WaitForSeconds(6f);
-        popupInstance.transform.localScale = poofPopupScale;
+        if (popupInstance != null)
+        {
+            popupInstance.transform.localScale = poofPopupScale;
+        }
         PlayPoof(isBuying ? buySuccess : buyFail);
     }
 
     private void PlayerCustomerInteractionOnOnCustomerServeStart(CustomerGO obj)
     {
         if (obj != this) return;
-        // TODO: hide "E"
         DeHighlight();
-        // Start Serve 
         ServeCustomer();
     }
 
     private void ServeCustomer()
     {
-        OnCustomerServeStart?.Invoke(this.customerData.customerId);
-        // TODO: start dialogue?
-        
-        
+        OnCustomerServeStart?.Invoke(customerData.customerId);
     }
 
     private void OnDisable()
@@ -104,36 +128,43 @@ public class CustomerGO : MonoBehaviour
         PlayerCustomerInteraction.OnCustomerApproach -= PlayerCustomerInteractionOnOnCustomerApproach;
         PlayerCustomerInteraction.OnCustomerAway -= PlayerCustomerInteractionOnOnCustomerAway;
         PlayerCustomerInteraction.OnCustomerServeStart -= PlayerCustomerInteractionOnOnCustomerServeStart;
-        CheckoutManager.Instance.OnCheckOutFinished -= InstanceOnOnCheckOutFinished;
+
+        if (CheckoutManager.Instance != null)
+        {
+            CheckoutManager.Instance.OnCheckOutFinished -= InstanceOnOnCheckOutFinished;
+        }
     }
 
     private void PlayerCustomerInteractionOnOnCustomerAway(CustomerGO obj)
     {
         if (obj != this) return;
         if (isInteracted) return;
-        // TODO: hide "E"
         DeHighlight();
     }
 
     private void PlayerCustomerInteractionOnOnCustomerApproach(CustomerGO obj)
     {
-        // if (obj != this) return;
+        if (obj != this) return;
         if (isInteracted) return;
-        // TODO: show "E" to interact
         Highlight();
-        
     }
 
     private void Highlight()
     {
+        if (popupSR == null) return;
+
         popupSR.sprite = interactSprite;
+        popupSR.color = Color.white;
         popupInstance.transform.localScale = interactionPopupScale;
         StartFloating();
     }
 
     private void DeHighlight()
     {
+        if (popupSR == null) return;
+
         popupSR.sprite = null;
+        popupSR.color = Color.white;
         popupInstance.transform.localScale = popupScale;
         StopFloating(true);
     }
@@ -141,64 +172,167 @@ public class CustomerGO : MonoBehaviour
     private void StartFloating()
     {
         floatTween?.Kill();
-        // Reset the internal float tracker
-        _currentFloatY = 0; 
-    
-        // Tween a simple float value rather than the Transform directly
-        floatTween = DOTween.To(() => _currentFloatY, x => _currentFloatY = x, floatDistance, floatDuration)
+        currentFloatY = 0f;
+
+        floatTween = DOTween.To(() => currentFloatY, x => currentFloatY = x, floatDistance, floatDuration)
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
     }
-    
+
     public void StopFloating(bool returnToStart = true)
     {
         floatTween?.Kill();
         if (returnToStart)
         {
-            DOTween.To(() => _currentFloatY, x => _currentFloatY = x, 0f, 0.5f).SetEase(Ease.OutQuad);
+            DOTween.To(() => currentFloatY, x => currentFloatY = x, 0f, 0.5f).SetEase(Ease.OutQuad);
         }
     }
-    
+
     [SerializeField] private float poofDistance = 1.5f;
     [SerializeField] private float poofDuration = 0.6f;
 
     public void PlayPoof(Sprite statusSprite)
     {
-        // 1. Stop any current floating
+        if (popupSR == null) return;
+
         floatTween?.Kill();
-    
-        // 2. Set the sprite (Success or Fail)
         popupSR.sprite = statusSprite;
-        popupSR.color = Color.white; // Ensure it's fully visible at start
+        popupSR.color = Color.white;
 
-        // 3. Create a Sequence
         Sequence poofSeq = DOTween.Sequence();
-
         poofSeq.Append(
-            // Move up quickly
-            DOTween.To(() => _currentFloatY, x => _currentFloatY = x, poofDistance, poofDuration)
-                .SetEase(Ease.OutBack) // "OutBack" gives it a nice little pop/overshoot
+            DOTween.To(() => currentFloatY, x => currentFloatY = x, poofDistance, poofDuration)
+                .SetEase(Ease.OutBack)
         );
-
-        poofSeq.Join(
-            // Fade out at the same time (or slightly delayed)
-            popupSR.DOFade(0, poofDuration).SetEase(Ease.InQuad)
-        );
-
-        // 4. Cleanup when done
-        poofSeq.OnComplete(() => {
+        poofSeq.Join(popupSR.DOFade(0, poofDuration).SetEase(Ease.InQuad));
+        poofSeq.OnComplete(() =>
+        {
             popupSR.sprite = null;
-            _currentFloatY = 0; // Reset for the next time it bobs
+            currentFloatY = 0f;
         });
     }
-    
+
+    public void PrepareForVisit()
+    {
+        isInteracted = false;
+        ResetPresentation();
+        SetCustomerVisible(true);
+
+        if (customerWander != null)
+        {
+            customerWander.BeginEntry();
+        }
+    }
+
+    public void FinishVisitAndQueueNext()
+    {
+        SetCustomerVisible(false);
+
+        if (activeCustomer == this)
+        {
+            activeCustomer = null;
+        }
+
+        StartCoroutine(SpawnNextCustomerAfterDelay());
+    }
+
+    private IEnumerator SpawnNextCustomerAfterDelay()
+    {
+        yield return new WaitForSeconds(nextCustomerDelay);
+        SpawnNextCustomerInSequence();
+    }
+
+    private void ResetPresentation()
+    {
+        StopFloating(false);
+        currentFloatY = 0f;
+
+        if (popupSR != null)
+        {
+            popupSR.DOKill();
+            popupSR.sprite = null;
+            popupSR.color = Color.white;
+        }
+
+        if (popupInstance != null)
+        {
+            popupInstance.transform.localScale = popupScale;
+        }
+    }
+
+    private void SetCustomerVisible(bool isVisible)
+    {
+        if (customerSpriteRenderer != null)
+        {
+            customerSpriteRenderer.enabled = isVisible;
+        }
+
+        if (customerCollider != null)
+        {
+            customerCollider.enabled = isVisible;
+        }
+
+        if (customerAnimator != null)
+        {
+            customerAnimator.enabled = isVisible;
+        }
+
+        if (popupInstance != null)
+        {
+            popupInstance.SetActive(isVisible);
+        }
+
+        if (customerWander != null)
+        {
+            customerWander.enabled = isVisible;
+        }
+    }
+
+    private static void SortCustomersById()
+    {
+        AllCustomers.Sort((a, b) => string.CompareOrdinal(a.customerData.customerId, b.customerData.customerId));
+    }
+
+    private static void SpawnNextCustomerInSequence()
+    {
+        if (nextCustomerIndex >= AllCustomers.Count)
+        {
+            if (RunManager.Instance != null)
+            {
+                RunManager.Instance.EndRun();
+            }
+            return;
+        }
+
+        CustomerGO nextCustomer = AllCustomers[nextCustomerIndex];
+        nextCustomerIndex += 1;
+
+        if (nextCustomer == null)
+        {
+            SpawnNextCustomerInSequence();
+            return;
+        }
+
+        activeCustomer = nextCustomer;
+        nextCustomer.PrepareForVisit();
+    }
+
     private void OnDestroy()
     {
-        // If the customer is deleted, take the popup with it
+        AllCustomers.Remove(this);
+        if (activeCustomer == this)
+        {
+            activeCustomer = null;
+        }
+        if (AllCustomers.Count == 0)
+        {
+            initialSpawnScheduled = false;
+            nextCustomerIndex = 0;
+        }
+
         if (popupInstance != null)
         {
             Destroy(popupInstance);
         }
     }
-    
 }

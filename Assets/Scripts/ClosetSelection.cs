@@ -32,7 +32,7 @@ public class ClosetSelection : MonoBehaviour
             ConfirmSelection();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             CloseCloset();
         }

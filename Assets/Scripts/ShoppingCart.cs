@@ -1,11 +1,13 @@
 using System;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShoppingCart : MonoBehaviour
 {
     [SerializeField] private Button shoppingCartButton;
+    [SerializeField] private TextMeshProUGUI totalValueText;
     private Image sr;
 
     [SerializeField] private float animDuration = 0.8f;
@@ -16,12 +18,6 @@ public class ShoppingCart : MonoBehaviour
     [SerializeField] private Sprite cartSpriteMany;
     
     private Canvas canvas;
-    
-
-    private void Awake()
-    {
-        
-    }
 
     private void Start()
     {
@@ -35,28 +31,31 @@ public class ShoppingCart : MonoBehaviour
         }
 
         sr = GetComponent<Image>();
-        sr.sprite = cartSpriteEmpty;
+        RefreshCartDisplay();
     }
 
     private void InstanceOnOnCartCleared()
     {
-        UpdateCartSprite();
+        RefreshCartDisplay();
     }
-
 
     private void OnDisable()
     {
         ItemGO.OnAddToCart -= ItemGOOnOnAddToCart;
+        if (CartManager.Instance != null)
+        {
+            CartManager.Instance.OnCartCleared -= InstanceOnOnCartCleared;
+        }
     }
 
     private void ItemGOOnOnAddToCart(GameObject obj)
     {
-        // animation into shoppingcart
+        RefreshCartValueText();
+
         var itemPrefab = obj;
         var targetTransform = shoppingCartButton.transform;
         var startPos = obj.transform.position;
         PlayBagAbsorbEffect(itemPrefab, startPos, targetTransform, canvas.transform, animDuration);
-        
     }
     
     public void PlayBagAbsorbEffect(GameObject itemPrefab, Vector3 startPosition, Transform bagTarget, Transform canvasTransform, float duration = 1.0f)
@@ -95,8 +94,14 @@ public class ShoppingCart : MonoBehaviour
         absorbSequence.OnComplete(() =>
         {
             Destroy(spawnedItem);
-            UpdateCartSprite();
+            RefreshCartDisplay();
         });
+    }
+
+    private void RefreshCartDisplay()
+    {
+        UpdateCartSprite();
+        RefreshCartValueText();
     }
 
     private void UpdateCartSprite()
@@ -118,5 +123,13 @@ public class ShoppingCart : MonoBehaviour
                 break;
         }
         Debug.Log("Updated Cart Sprite: " + count);
+    }
+
+    private void RefreshCartValueText()
+    {
+        if (totalValueText == null || CartManager.Instance == null) return;
+
+        float totalValue = CartManager.Instance.GetCurrentCartTotalValue();
+        totalValueText.text = "$" + totalValue.ToString("0.##");
     }
 }

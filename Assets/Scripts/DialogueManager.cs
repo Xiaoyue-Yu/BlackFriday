@@ -1,14 +1,22 @@
-
+using System.Text;
 using UnityEngine;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine.UI;
+
+[System.Serializable]
+public class CustomerPortraitEntry
+{
+    public string customerId;
+    public Sprite portrait;
+}
 
 public class DialogueManager : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI customerInitialText;
+    [SerializeField] private Image portraitImage;
 
     [SerializeField] private Button option1Button;
     [SerializeField] private Button option2Button;
@@ -17,6 +25,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI option1Text;
     [SerializeField] private TextMeshProUGUI option2Text;
     [SerializeField] private TextMeshProUGUI option3Text;
+
+    [Header("Portraits")]
+    [SerializeField] private CustomerPortraitEntry[] customerPortraits;
 
     [Header("Ink")]
     [SerializeField] private TextAsset inkJSON;
@@ -29,13 +40,6 @@ public class DialogueManager : MonoBehaviour
         if (dialoguePanel != null)
         {
             dialoguePanel.SetActive(false);
-        }
-    }
-    private void Update()//test press p and dialogue panel shoukd appear // 
-    { 
-        if (Input.GetKeyDown(KeyCode.P))
-         {
-             dialoguePanel.SetActive(true); 
         }
     }
 
@@ -66,6 +70,8 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        UpdatePortrait(customerId);
+
         if (inkJSON == null)
         {
             Debug.LogError("Ink JSON is not assigned");
@@ -83,19 +89,41 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.LogError("Ink path not found: " + customerId + "\n" + e.Message);
             return;
-    }
+        }
 
-    RefreshView();
-}
+        RefreshView();
+    }
 
     private void RefreshView()
     {
         if (currentStory == null) return;
 
-        if (currentStory.canContinue)
+        StringBuilder visibleLines = new StringBuilder();
+
+        while (currentStory.canContinue)
         {
             string line = currentStory.Continue().Trim();
-            customerInitialText.text = line;
+            if (string.IsNullOrEmpty(line))
+            {
+                continue;
+            }
+
+            if (visibleLines.Length > 0)
+            {
+                visibleLines.AppendLine();
+            }
+
+            visibleLines.Append(line);
+
+            if (currentStory.currentChoices.Count > 0)
+            {
+                break;
+            }
+        }
+
+        if (customerInitialText != null)
+        {
+            customerInitialText.text = visibleLines.ToString();
         }
 
         DisplayChoices();
@@ -145,12 +173,29 @@ public class DialogueManager : MonoBehaviour
         Debug.Log("Ending dialogue");
         dialoguePlaying = false;
 
-        // if (dialoguePanel != null)
-        // {
+        if (dialoguePanel != null)
+        {
             dialoguePanel.SetActive(false);
-        // }
+        }
 
         currentStory = null;
     }
-    
+
+    private void UpdatePortrait(string customerId)
+    {
+        if (portraitImage == null) return;
+
+        foreach (CustomerPortraitEntry entry in customerPortraits)
+        {
+            if (entry != null && entry.customerId == customerId)
+            {
+                portraitImage.sprite = entry.portrait;
+                portraitImage.enabled = entry.portrait != null;
+                return;
+            }
+        }
+
+        portraitImage.sprite = null;
+        portraitImage.enabled = false;
+    }
 }

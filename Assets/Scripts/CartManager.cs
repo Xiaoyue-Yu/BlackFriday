@@ -68,4 +68,15 @@ public class CartManager : MonoBehaviour
         OnCartCleared?.Invoke();
         Debug.Log("Cleared cart");
     }
+
+    public float GetCurrentCartTotalValue()
+    {
+        float total = 0f;
+        foreach (var item in curCart)
+        {
+            total += item.Price;
+        }
+
+        return total;
+    }
 }

@@ -13,6 +13,15 @@ public class ShopArea : MonoBehaviour
     private Collider2D colZone;
     private SpriteRenderer sr;
 
+    public bool ShouldLockPlayerMovement
+    {
+        get
+        {
+            if (panel == null) return false;
+            return panel.GetComponent<ClosetSelection>() != null;
+        }
+    }
+
     private void Awake()
     {
         if (colZone == null)
@@ -102,13 +111,9 @@ public class ShopArea : MonoBehaviour
         {
             ClosetSelection closet = panel.GetComponent<ClosetSelection>();
             if (closet != null)
-            { 
+            {
                 panel.SetActive(true);
                 closet.OpenCloset();
-            }
-            else
-            {
-                //panel.SetActive(true);
             }
         }
         isPanelActivated = true;

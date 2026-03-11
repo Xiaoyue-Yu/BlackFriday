@@ -47,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void SetInactive(ShopArea obj)
     {
+        if (obj != null && !obj.ShouldLockPlayerMovement) return;
+
         isActive = false;
         if (animator != null) animator.SetBool("isMoving", false);
     }

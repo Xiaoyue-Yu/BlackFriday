@@ -4,7 +4,7 @@ using UnityEngine;
 public class RunEarningsUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI earningsText;
-    [SerializeField] private string prefix = "$";
+    [SerializeField] private string prefix = "Total Revenue: $";
 
     private void Start()
     {
@@ -23,3 +23,4 @@ public class RunEarningsUI : MonoBehaviour
         earningsText.text = prefix + RunManager.Instance.RunEarnings.ToString("0.##");
     }
 }
+

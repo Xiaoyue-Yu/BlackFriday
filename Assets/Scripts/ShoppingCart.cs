@@ -130,6 +130,7 @@ public class ShoppingCart : MonoBehaviour
         if (totalValueText == null || CartManager.Instance == null) return;
 
         float totalValue = CartManager.Instance.GetCurrentCartTotalValue();
-        totalValueText.text = "$" + totalValue.ToString("0.##");
+        totalValueText.text = "Cart Total: $" + totalValue.ToString("0.##");
     }
 }
+

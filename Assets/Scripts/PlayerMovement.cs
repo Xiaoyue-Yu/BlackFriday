@@ -4,6 +4,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5.0f;
+    [Header("Movement Bounds")]
+    [SerializeField] private bool clampToBounds = true;
+    [SerializeField] private Vector2 minBounds = new Vector2(-5.4f, -4.0f);
+    [SerializeField] private Vector2 maxBounds = new Vector2(5.5f, 4.1f);
     public bool isActive;
 
     private Animator animator;
@@ -64,7 +68,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (move.magnitude > 1f) move.Normalize();
 
-        transform.position += move * moveSpeed * Time.deltaTime;
+        Vector3 nextPosition = transform.position + move * moveSpeed * Time.deltaTime;
+        if (clampToBounds)
+        {
+            nextPosition.x = Mathf.Clamp(nextPosition.x, minBounds.x, maxBounds.x);
+            nextPosition.y = Mathf.Clamp(nextPosition.y, minBounds.y, maxBounds.y);
+        }
+
+        transform.position = nextPosition;
 
         bool isMoving = move.sqrMagnitude > 0.01f;
         if (animator != null)

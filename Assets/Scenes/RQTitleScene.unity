@@ -1355,6 +1355,18 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1868231037262761754, guid: 3b27a50d2d7b84dbfb44b98394d45f2b, type: 3}
+      propertyPath: maxBounds.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868231037262761754, guid: 3b27a50d2d7b84dbfb44b98394d45f2b, type: 3}
+      propertyPath: minBounds.x
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868231037262761754, guid: 3b27a50d2d7b84dbfb44b98394d45f2b, type: 3}
+      propertyPath: minBounds.y
+      value: -4.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2679610659249779296, guid: 3b27a50d2d7b84dbfb44b98394d45f2b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.62814
@@ -1432,7 +1444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1528,7 +1540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1682,7 +1694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1757,7 +1769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1877,11 +1889,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1252345675}
+  - {fileID: 1147922651}
   - {fileID: 1317745554}
   - {fileID: 705000519}
   - {fileID: 648804764}
   - {fileID: 1096713439}
-  - {fileID: 1147922651}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2104,6 +2116,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 1
+  clampToBounds: 1
+  minBounds: {x: -5.4, y: -4}
+  maxBounds: {x: 5.5, y: 4.1}
   isActive: 0
 --- !u!114 &1841239898
 MonoBehaviour:

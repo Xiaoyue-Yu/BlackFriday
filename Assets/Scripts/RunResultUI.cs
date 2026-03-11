@@ -1,5 +1,5 @@
 using UnityEngine;
-using TMPro; 
+using TMPro;
 using UnityEngine.UI;
 
 public class RunResultUI : MonoBehaviour
@@ -15,7 +15,6 @@ public class RunResultUI : MonoBehaviour
 
     private void Start()
     {
-        // 1. Pull data from the Singleton
         if (RunManager.Instance != null)
         {
             earningsText.text = $"${RunManager.Instance.RunEarnings}";
@@ -27,7 +26,7 @@ public class RunResultUI : MonoBehaviour
         {
             Debug.LogWarning("RunManager Instance is null! Start from the main menu to test.");
         }
-        
+
         if (restartButton != null)
         {
             restartButton.onClick.AddListener(OnRestartClicked);
@@ -36,9 +35,9 @@ public class RunResultUI : MonoBehaviour
 
     private void OnRestartClicked()
     {
-        if (RunManager.Instance != null)
+        if (SceneLoader.Instance != null)
         {
-            RunManager.Instance.StartNewRun();
+            SceneLoader.Instance.LoadTitleScene();
         }
     }
 }

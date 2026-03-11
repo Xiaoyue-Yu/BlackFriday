@@ -25,7 +25,7 @@ public class PlayerShopInteraction : MonoBehaviour
             OnOpenShop?.Invoke(activeShopArea);
         }
 
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.X))
         {
             OnCloseShop?.Invoke(activeShopArea);
         }
@@ -54,3 +54,4 @@ public class PlayerShopInteraction : MonoBehaviour
         }
     }
 }
+

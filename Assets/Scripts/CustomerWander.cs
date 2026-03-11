@@ -4,17 +4,19 @@ public class CustomerWander : MonoBehaviour
 {
     public enum CustomerState
     {
-        Wandering,          
-        GoingToCounter,     
-        WaitingAtCounter,   
-        Leaving            
+        Entering,
+        Wandering,
+        GoingToCounter,
+        WaitingAtCounter,
+        Leaving
     }
 
     [Header("State")]
     public CustomerState currentState = CustomerState.Wandering;
 
-    private Vector2 counterPosition = new Vector2(0f, 2f);
-    private Vector2 exitPosition = new Vector2(0f, -6f);
+    [SerializeField] private Vector2 counterPosition = new Vector2(0f, 2f);
+    [SerializeField] private Vector2 entrancePosition = new Vector2(0f, -6f);
+    [SerializeField] private Vector2 exitPosition = new Vector2(0f, -6f);
 
     [Header("Wondering")]
     public float moveSpeed = 1.5f;
@@ -25,12 +27,36 @@ public class CustomerWander : MonoBehaviour
     private Vector2 targetPosition;
     private float waitTimer;
     private Animator animator;
+    private CustomerGO customerGO;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        customerGO = GetComponent<CustomerGO>();
+    }
 
     private void Start()
     {
         startPosition = transform.position;
-        animator = GetComponent<Animator>();
         PickNewDestination();
+    }
+
+    public void BeginEntry()
+    {
+        if (startPosition == Vector2.zero)
+        {
+            startPosition = transform.position;
+        }
+
+        transform.position = entrancePosition;
+        targetPosition = startPosition;
+        currentState = CustomerState.Entering;
+        waitTimer = 0f;
+
+        if (animator != null)
+        {
+            animator.SetBool("isMoving", true);
+        }
     }
 
     public void GoToCheckout()
@@ -45,6 +71,17 @@ public class CustomerWander : MonoBehaviour
     {
         switch (currentState)
         {
+            case CustomerState.Entering:
+                MoveTowardsPoint(startPosition);
+
+                if (Vector2.Distance(transform.position, startPosition) < 0.1f)
+                {
+                    currentState = CustomerState.Wandering;
+                    if (animator != null) animator.SetBool("isMoving", false);
+                    PickNewDestination();
+                }
+                break;
+
             case CustomerState.Wandering:
                 UpdateWandering();
                 break;
@@ -55,8 +92,8 @@ public class CustomerWander : MonoBehaviour
                 if (Vector2.Distance(transform.position, counterPosition) < 0.1f)
                 {
                     currentState = CustomerState.WaitingAtCounter;
-                    waitTimer = 3.0f; 
-                    if (animator != null) animator.SetBool("isMoving", false); 
+                    waitTimer = 3.0f;
+                    if (animator != null) animator.SetBool("isMoving", false);
                 }
                 break;
 
@@ -66,7 +103,7 @@ public class CustomerWander : MonoBehaviour
                 if (waitTimer <= 0)
                 {
                     currentState = CustomerState.Leaving;
-                    targetPosition = exitPosition; 
+                    targetPosition = exitPosition;
                 }
                 break;
 
@@ -75,12 +112,14 @@ public class CustomerWander : MonoBehaviour
 
                 if (Vector2.Distance(transform.position, exitPosition) < 0.1f)
                 {
-                    Destroy(gameObject);
+                    if (customerGO != null)
+                    {
+                        customerGO.FinishVisitAndQueueNext();
+                    }
                 }
                 break;
         }
     }
-
 
     private void UpdateWandering()
     {
@@ -111,6 +150,10 @@ public class CustomerWander : MonoBehaviour
         {
             transform.up = direction.normalized;
             if (animator != null) animator.SetBool("isMoving", true);
+        }
+        else if (animator != null)
+        {
+            animator.SetBool("isMoving", false);
         }
     }
 

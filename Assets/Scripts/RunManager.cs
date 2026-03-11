@@ -8,14 +8,15 @@ public class RunManager : MonoBehaviour
     public CustomerGO curCustomerGO = null;
 
     public event Action OnRunStart;
-    public event Action<float> OnRunEnd;     // earnings
-    
+    public event Action<float> OnRunEnd;
 
-    [SerializeField]private float runEarnings = 0f;
-    [SerializeField]private int customerFulfilled = 0;
+    [SerializeField] private float runEarnings = 0f;
+    [SerializeField] private int customerFulfilled = 0;
     [SerializeField] private int customerFailed = 0;
-    [SerializeField]private int runScore = 0;
+    [SerializeField] private int runScore = 0;
     [SerializeField] private int clothSold = 0;
+
+    private bool hasRunEnded;
 
     public int ClothSold
     {
@@ -28,7 +29,6 @@ public class RunManager : MonoBehaviour
         get => customerFailed;
         set => customerFailed = value;
     }
-
 
     public int RunScore
     {
@@ -59,49 +59,49 @@ public class RunManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
     }
 
     private void Start()
     {
-        ShopTimer.OnStoreClose += EndRun;
         CheckoutManager.Instance.OnCheckOutFinished += InstanceOnOnCheckOutFinished;
     }
 
     private void InstanceOnOnCheckOutFinished(bool isBuying)
     {
-        // clear customer
         curCustomerGO = null;
         runScore = 0;
     }
 
     private void OnDisable()
     {
-        ShopTimer.OnStoreClose -= EndRun;
-        CheckoutManager.Instance.OnCheckOutFinished -= InstanceOnOnCheckOutFinished;
+        if (CheckoutManager.Instance != null)
+        {
+            CheckoutManager.Instance.OnCheckOutFinished -= InstanceOnOnCheckOutFinished;
+        }
     }
 
     public void StartNewRun()
     {
-        
         SceneLoader.Instance.LoadStoreScene();
         Debug.Log("Start new Run");
-        // Reset all stats for the new run
+
         runEarnings = 0f;
         customerFulfilled = 0;
         customerFailed = 0;
         clothSold = 0;
         runScore = 0;
+        hasRunEnded = false;
+
         OnRunStart?.Invoke();
     }
 
     public void EndRun()
     {
+        if (hasRunEnded) return;
+        hasRunEnded = true;
+
         Debug.Log("Ending Run!");
         OnRunEnd?.Invoke(runEarnings);
-        // TODO: save score
-        // transition to title
         SceneLoader.Instance.LoadResultScene();
     }
-    
 }

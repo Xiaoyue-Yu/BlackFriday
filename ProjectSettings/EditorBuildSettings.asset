@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RQScene.unity
     guid: 4e55d0b7f8d5640518e3156ff502b151
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/RQResultScene.unity
     guid: 2fefe7d7b3c5f4e238eab34e0b438c00
   m_configObjects:
